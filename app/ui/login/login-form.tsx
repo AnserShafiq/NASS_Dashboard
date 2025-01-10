@@ -13,7 +13,7 @@ export default function Form(){
         undefined
       )
     return(
-    <form action={formAction} className="space-y-3">
+    <form action={formAction} className="space-y-3 text-black">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={`text-black mb-3 text-2xl`}>
           Please log in to continue.
