@@ -1,3 +1,4 @@
+import Userslist from "@/app/ui/dashboard/userslist";
 
 
 export default function Page(){
@@ -5,6 +6,7 @@ export default function Page(){
         <main>
 
             DASHBOARD
+            <Userslist />
 
         </main>
     )

@@ -16,6 +16,7 @@ const FormSchema = z.object({
 })
 
 const CreateUser = FormSchema.omit({})
+const EditUser = FormSchema.omit({id:true})
 
 export async function checkUserId(id:string) {
     const userCheck = await sql `
@@ -45,6 +46,27 @@ export async function createUser (formData: FormData):Promise<void>{
     revalidatePath('/')
     redirect('/')
 }
+
+
+export async function editUser (id:string, formData: FormData){
+    const {name, email, password}=EditUser.parse({
+        name: formData.get('name'),
+        email:formData.get('email'),
+        password:formData.get('password')
+    })
+
+    try {
+        await sql`UPDATE tabletwo SET name=${name}, email=${email}, password=${password} WHERE id=${id}`
+    } catch {
+        return{
+            message: 'User not available',
+        }
+    }
+    revalidatePath('/')
+    redirect('/dashboard')
+}
+
+
 export async function authenticate(
     prevState: string | undefined,
     formData: FormData,

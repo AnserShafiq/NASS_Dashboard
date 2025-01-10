@@ -11,3 +11,13 @@ export async function fetchUsers (){
         throw new Error('Failed to fetch')
     }
 }
+
+
+export async function fetchUserById(id:string){
+    try{
+        const user = await sql<User>`SELECT * FROM tabletwo WHERE id=${id}`
+        return user.rows[0]
+    }catch{
+        console.error('User not found')
+    }
+}
