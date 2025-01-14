@@ -6,3 +6,12 @@ export type User = {
     email:string,
     password:string,
 };
+
+// export interface Image {
+//     id:number,
+//     username:string,
+//     title:string,
+//     data:Buffer,
+//     contentType:string,
+//     createdAt: Date,
+// };

@@ -8,4 +8,14 @@ const users = [
     }
 ]
 
-export {users};
+export {users,images};
+
+
+const images = [
+    {
+        id:'userid-100',
+        title:'ImageOne',
+        data:"buffer_data",
+        createdAt:'2025-01-14',
+    }
+]

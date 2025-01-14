@@ -22,6 +22,8 @@ export default function Form(){
     return(
         <form action={createUser}>
             <div className='flex flex-col'>
+            <label>Add your profile pic:</label>
+            <input type='file' name='profilePic' id="profilePic" accept="image/png, image/jpeg, image/jpg"/>
             <label>Enter user id:</label>
             <input className="text-black" type="text" name="id" id="id" placeholder="enter your username id" onChange={(e) => handleUserId(e.target.value)}/>
             {idCheck === false && <p className="text-red-500">This ID is already taken.</p>}
