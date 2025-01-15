@@ -5,10 +5,11 @@ import { z } from "zod";
 import { User } from "./app/lib/definitions";
 import { sql } from "@vercel/postgres";
 // import bcrypt from 'bcrypt'
+
 async function getUser(email:string) {
     try{
         console.log('Going to check email in DB', email)
-        const user = await sql<User>`SELECT * FROM tabletwo WHERE email=${email}`
+        const user = await sql<User>`SELECT * FROM user_profiles WHERE user_email=${email}`
         return user.rows[0]
     }catch(error){
         console.error('Failed to fetch user:', error);

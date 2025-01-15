@@ -9,7 +9,7 @@ async function GetUser(){
 }
 
 export async function POST(request: Request) {
-
+  console.log('Called Self created POST')
   try {
     const formData = await request.formData();
     const file = formData.get('file') as File;

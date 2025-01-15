@@ -35,13 +35,13 @@ export default async function Userslist(){
                     Users.map((user) => (
                         <tr className="w-full" key={user.id}>
                             <td className="border-2 align-top border-black text-start w-[25%] max-w-[25%] text-wrap">
-                                {user.name}
+                                {user.user_name}
                             </td>
                             <td className="border-2 align-top border-black text-start w-[25%] max-w-[25%] text-wrap">
                                 {user.id}
                             </td>
                             <td className="border-2 align-top border-black text-start w-[25%] max-w-[25%] text-wrap">
-                                {user.email}
+                                {user.user_email}
                             </td>
                             {/* <td className="border-2 border-black text-start w-[25%] max-w-[25%] truncate overflow-hidden text-wrap">
                                 {user.password}

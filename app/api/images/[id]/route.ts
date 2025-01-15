@@ -26,7 +26,7 @@ export async function GET(
     // Return the image with appropriate headers
     return new NextResponse(image.data, {
       headers: {
-        // 'Content-Type': image.content_type,
+        'Content-Type': image.content_type,
         'Cache-Control': 'public, max-age=31536000',
       },
     });
