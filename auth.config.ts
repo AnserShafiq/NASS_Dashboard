@@ -13,9 +13,9 @@ export const authConfig: NextAuthConfig = {
       if (token) {
         session.user = {
           ...session.user,
-          name: token.name, // Add name to session.user
-          email: token.email, // Ensure email is included
-          id: token.sub, // Add user ID if required
+          name: token.name || '', // Add name to session.user
+          email: token.email || '', // Ensure email is included
+          id: token.sub || '', // Add user ID if required
         };
       }
       return session;
@@ -23,11 +23,10 @@ export const authConfig: NextAuthConfig = {
     /**
      * Adds user details to the JWT when logging in.
      */
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token, user}) => {
       if (user) {
         token.name = user?.user_name;
         token.email = user?.user_email;
-        token.profilePic = user?.profilePic;
         token.sub = user.id;
       }
       // console.log('Toker from BE=> ', token)

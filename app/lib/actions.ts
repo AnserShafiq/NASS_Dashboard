@@ -21,18 +21,17 @@ const FormSchema = z.object({
 const CreateUser = FormSchema.omit({id:true})
 const EditUser = FormSchema.omit({id:true})
 
-export async function checkUserId(id:string) {
+export async function checkUserEmail(toCheck:string) {
     const userCheck = await sql `
-        SELECT * FROM tabletwo WHERE id = ${id}
+        SELECT * FROM USER_PROFILES WHERE user_email=${toCheck}
     `
     return userCheck.rows.length
 }
 
 
-export async function createUser (formData: FormData):Promise<void>{
+export async function createUser (formData: FormData):Promise<{success:boolean}>{
     const { profilePic,name, email, password} = CreateUser.parse({
         profilePic: formData.get('profilePic'),
-        // id: formData.get('id'),
         name: formData.get('name'),
         email:formData.get('email'),
         password:formData.get('password'),
@@ -42,10 +41,6 @@ export async function createUser (formData: FormData):Promise<void>{
 
     try{
         console.log(profilePic)
-        // await sql` 
-        // INSERT INTO tabletwo (id,user_name,user_email,password,profile_pic,pic_type,created_at)
-        // VALUES (${id}, ${name}, ${email},${password},${buffer},)
-        // `
         const query = {
             text: 'INSERT INTO user_profiles (user_name,user_email,password,profile_pic,pic_type,created_at) VALUES($1,$2,$3,$4,$5,NOW())',
             values: [ name, email, password, buffer,'.png' ]
@@ -53,13 +48,14 @@ export async function createUser (formData: FormData):Promise<void>{
 
         await sql.query(query)
         console.log('Created a user')
+        // await signIn('credentials', formData)
+        return {success: true};
         
     }catch(error){
         console.error('User not got created', error);
         // alert({message:'User creation failed'})
+        return {success: false}
     }
-    revalidatePath('/')
-    redirect('/')
 }
 
 
