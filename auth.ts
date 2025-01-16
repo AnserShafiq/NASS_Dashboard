@@ -17,9 +17,14 @@ async function getUser(email:string) {
     }
 }
 
-export const {auth, signIn, signOut} = NextAuth({
+export const {handlers, auth, signIn, signOut} = NextAuth({
     ...authConfig,
-    providers: [Credentials({
+    providers: [
+        Credentials({
+        credentials:{
+            email: { label: "Email", type: "email", placeholder: "Email" },
+            password: { label: "Password", type: "password", placeholder: "Password" },
+        },
         async authorize(credentials){
             const parsedCredentials = z.object({
                 email:z.string().email(),
@@ -32,7 +37,7 @@ export const {auth, signIn, signOut} = NextAuth({
                 if(!user) return null
                 if (password === user.password) 
                 {
-                    console.log('password matched')
+                    console.log('password matched', user)
                     return user
                 }
 
@@ -40,5 +45,6 @@ export const {auth, signIn, signOut} = NextAuth({
             console.log('Invalid Credentials')
             return null
         },
+
     })]
 })

@@ -5,9 +5,12 @@ import {
     KeyIcon,
     ArrowRightIcon,ExclamationCircleIcon
   } from '@heroicons/react/24/outline';
+import { useSession } from 'next-auth/react';
 import { useActionState } from 'react';
 
 export default function Form(){
+  const {data:session} = useSession()
+  console.log(session)
     const [errorMessage, formAction, isPending] = useActionState(
         authenticate,
         undefined

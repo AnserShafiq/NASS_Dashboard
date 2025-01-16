@@ -1,6 +1,7 @@
 // In this file we are dealing the varaiable's structures
 
 export type User = {
+    profilePic: File,
     id:string,
     user_name: string,
     user_email:string,
