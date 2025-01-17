@@ -12,12 +12,14 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
         sidebar: 'var(--sidebar)',
+
         red:{
           '200':'var(--button-bg-red)'
         }
       },
       backgroundImage:{
-        'home':"url('/images/home.jpg')"
+        'home':"url('/images/home.jpg')",
+        sidebar2: 'var(--sidebar-2)',
       }
     },
   },

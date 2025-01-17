@@ -5,7 +5,7 @@ import { signOut } from "next-auth/react";
 
 export default function Sidebar() {
     return (
-        <div className="flex flex-col justify-between bg-sidebar items-start w-full h-full p-4">
+        <div className="flex flex-col justify-between bg-sidebar2 items-start w-full h-full p-4">
             <div className="w-full">
                 <Image 
                     className="mx-auto"
