@@ -1,24 +1,29 @@
-// 'use client'
+// 'use client' <-- Uncomment this if the component is intended to run on the client
 import Userslist from "@/app/ui/dashboard/userslist";
 import CreateUserForm from "../../ui/create-user";
 import { auth } from "@/auth";
-// import { useSession } from "next-auth/react";
+import { getUserDetails } from "@/app/lib/actions";
+import Image from "next/image";
 
+export default async function Page() {
+  const session = await auth();
 
-export default async function Page(){
+  // Fetch user details
+  const User = await getUserDetails(session?.user?.id);
 
-    const session = await auth() 
-    // const {data:session, status} = useSession()
-    console.log('Form dashboard =>' ,session)
-    // const user = session?.user
-
-    return(
-        <main>
-            {/* {status} */}
-            DASHBOARD
-            <h3>Welcome {session?.user?.name}</h3>
-            <Userslist />
-            <CreateUserForm />
-        </main>
-    )
+  return (
+    <main>
+      <h3>
+        Welcome {User?.user_name}, {User?.user_email}
+      </h3>
+      <Image
+        src={User?.profile_pic}
+        alt={`${User?.user_name}'s pic`}
+        width={300}
+        height={250}
+      />
+      <Userslist />
+      <CreateUserForm />
+    </main>
+  );
 }

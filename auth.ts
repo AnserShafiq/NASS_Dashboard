@@ -37,7 +37,7 @@ export const {handlers, auth, signIn, signOut} = NextAuth({
                 if(!user) return null
                 if (password === user.password) 
                 {
-                    console.log('password matched', user)
+                    console.log('password matched')
                     return user
                 }
 

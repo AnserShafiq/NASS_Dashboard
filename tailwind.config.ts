@@ -11,6 +11,10 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        sidebar: 'var(--sidebar)',
+        red:{
+          '200':'var(--button-bg-red)'
+        }
       },
       backgroundImage:{
         'home':"url('/images/home.jpg')"

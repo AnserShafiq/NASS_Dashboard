@@ -58,6 +58,18 @@ export async function createUser (formData: FormData):Promise<{success:boolean}>
     }
 }
 
+export async function getUserDetails(id:string | undefined){
+    try {
+        const result = await sql`SELECT * FROM USER_PROFILES WHERE id=${id}`
+        const user = result.rows[0]
+        const base64 = Buffer.from(user.profile_pic).toString('base64');
+        user.profile_pic = `data:image/png;base64,${base64}`
+        return user
+    }catch{
+        console.error('Unable to get user.')
+        return null
+    }
+}
 
 export async function editUser (id:string, formData: FormData){
     const {name, email, password}=EditUser.parse({

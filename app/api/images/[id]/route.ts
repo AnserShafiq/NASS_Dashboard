@@ -9,7 +9,7 @@ export async function GET(
     const {id} = await params;
     // Query to fetch image data and its content type
     const query = {
-      text: 'SELECT data FROM userimages WHERE id = $1',
+      text: 'SELECT profile_pic FROM USER_PROFILES WHERE user_email = $1',
       values: [id], // No need to await `params.id`
     };
 
@@ -26,7 +26,7 @@ export async function GET(
     // Return the image with appropriate headers
     return new NextResponse(image.data, {
       headers: {
-        'Content-Type': image.content_type,
+        'Content-Type': 'image/jpg',
         'Cache-Control': 'public, max-age=31536000',
       },
     });

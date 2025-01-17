@@ -5,6 +5,11 @@ export const authConfig: NextAuthConfig = {
     signIn: '/login',
     signOut: '/',
   },
+  session:{
+    strategy: 'jwt',
+    maxAge: 60*60*6,
+    updateAge: 60,
+  },
   callbacks: {
     /**
      * Adds the user's name and other fields to the session object.
