@@ -8,6 +8,29 @@ export type User = {
     password:string,
 };
 
+export const SideMenu = [
+    {
+        name: 'Dashboard',
+        link: '/dashboard'
+    },{
+        name: 'Our Companies',
+        link: '/dashboard',
+    },{
+        name: 'Our Agents',
+        link:'/dashboard',
+    },{
+        name: 'Client Employers',
+        link: '/dashboard',
+    },{
+        name: 'Job Applicants',
+        link: '/dashboard',
+    },{
+        name: 'Add New Data',
+        link: '/dashboard/newdata',
+    },
+
+]
+
 // export interface Image {
 //     id:number,
 //     username:string,
