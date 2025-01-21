@@ -1,69 +1,38 @@
-import { NextResponse } from "next/server";
-import Busboy from "busboy";
+import { sql } from "@vercel/postgres";
+import { NextRequest, NextResponse } from "next/server";
 
-export const config = {
-  api: {
-    bodyParser: false, // Disable the default body parser
-  },
-};
-
-export async function POST(request: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const busboy = new Busboy({ headers: request.headers });
+    const body = await req.json();
+    const { excelData } = body;
 
-    // To store the file and its metadata
-    let uploadedFile: { fileName: string; fileBuffer: Buffer } | null = null;
-
-    // Use a promise to handle async operations with Busboy
-    const result = await new Promise((resolve, reject) => {
-      const chunks: Buffer[] = [];
-
-      busboy.on("file", (fieldname, file, filename, encoding, mimetype) => {
-        file.on("data", (chunk) => chunks.push(chunk)); // Collect file chunks
-        file.on("end", () => {
-          uploadedFile = {
-            fileName: filename,
-            fileBuffer: Buffer.concat(chunks),
-          };
-        });
-      });
-
-      busboy.on("finish", () => {
-        resolve(uploadedFile);
-      });
-
-      busboy.on("error", (error) => {
-        reject(error);
-      });
-
-      // Pipe the request body to Busboy
-      request.body?.pipe(busboy);
-    });
-
-    if (!result) {
+    if (!excelData || !Array.isArray(excelData)) {
       return NextResponse.json(
-        { error: "No file uploaded" },
+        { error: "Invalid Data Format" },
         { status: 400 }
       );
     }
 
-    const { fileName, fileBuffer } = result as {
-      fileName: string;
-      fileBuffer: Buffer;
-    };
+    await sql.query("BEGIN");
 
-    // You can now process the file (e.g., save it or parse it)
-    console.log(`File uploaded: ${fileName}`);
-    console.log(`File size: ${fileBuffer.length} bytes`);
+    for (const row of excelData) {
+      const query = `
+        INSERT INTO USER_PROFILES (user_name, user_email, password, created_at) 
+        VALUES ($1, $2, $3, NOW())
+      `;
+      await sql.query(query, [row.user_name, row.user_email, row.password]);
+    }
 
-    return NextResponse.json({
-      message: "File uploaded successfully",
-      fileName,
-    });
-  } catch (error) {
-    console.error("Error handling upload:", error);
+    await sql.query("COMMIT");
     return NextResponse.json(
-      { error: "File upload failed" },
+      { message: "Successfully added to the database" },
+      { status: 200 }
+    );
+  } catch (error) {
+    await sql.query("ROLLBACK");
+    console.error("Database error:", error);
+    return NextResponse.json(
+      { error: "Failed to insert data into the database" },
       { status: 500 }
     );
   }

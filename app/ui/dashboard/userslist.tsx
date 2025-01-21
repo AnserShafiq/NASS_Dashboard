@@ -1,6 +1,8 @@
+
 import { fetchUsers } from "@/app/lib/fetchings"
 import Link from "next/link"
 import React from "react"
+import DeleteBtn from "./delete-user-btn"
 
 
 
@@ -48,7 +50,7 @@ export default async function Userslist(){
                             </td> */}
                             <td className="border-2 align-top border-black text-start w-[25%] max-w-[25%] text-wrap">
                                 <EditUser id={user.id}>Edit</EditUser>
-                                <button>Delete</button>
+                                <DeleteBtn id={user.id}>Delete It</DeleteBtn>
                             </td>
                         </tr>
                     ))

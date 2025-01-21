@@ -1,9 +1,10 @@
-// 'use client' <-- Uncomment this if the component is intended to run on the client
+
 import Userslist from "@/app/ui/dashboard/userslist";
-// import CreateUserForm from "../../ui/create-user";
 import { auth } from "@/auth";
 import { getUserDetails } from "@/app/lib/actions";
 import Image from "next/image";
+import { Suspense } from "react";
+import Loading from "@/app/ui/loading";
 
 export default async function Page() {
   const session = await auth();
@@ -12,6 +13,7 @@ export default async function Page() {
   const User = await getUserDetails(session?.user?.id);
 
   return (
+    <Suspense fallback={<Loading />}>
     <main>
       <h3>
         Welcome {User?.user_name}, {User?.user_email}
@@ -23,7 +25,7 @@ export default async function Page() {
         height={250}
       />
       <Userslist />
-      {/* <CreateUserForm /> */}
     </main>
+    </Suspense>
   );
 }

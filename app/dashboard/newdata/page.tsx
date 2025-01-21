@@ -22,7 +22,7 @@ export default function Page() {
     }
 
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = async(e) => {
       if (!e.target?.result) return;
 
       const workbook = XLSX.read(e.target.result as string, { type: "binary" });
@@ -30,7 +30,21 @@ export default function Page() {
       const worksheet = workbook.Sheets[sheetName]; // Get the first sheet
       const data = XLSX.utils.sheet_to_json(worksheet); // Convert to JSON
       setExcelData(data); // Store parsed data in state
+      
+      const response = await fetch('/api/upload/file', {
+        method:"POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({excelData:data})
+      })
+      
+      if(response.ok){
+        console.log('Data addition done')
+      }else{
+        console.log('Failed to add data')
+      }
+
     };
+
 
     reader.readAsBinaryString(file); // Read the file as binary string
   };
