@@ -5,6 +5,7 @@ import { getUserDetails } from "@/app/lib/actions";
 import Image from "next/image";
 import { Suspense } from "react";
 import Loading from "@/app/ui/loading";
+import AddNewAgent from "@/app/ui/dashboard/add-agent";
 
 export default async function Page() {
   const session = await auth();
@@ -25,6 +26,7 @@ export default async function Page() {
         height={250}
       />
       <Userslist />
+      <AddNewAgent />
     </main>
     </Suspense>
   );

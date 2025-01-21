@@ -8,6 +8,16 @@ export type User = {
     password:string,
 };
 
+export type Agent = {
+    agent_id: string,
+    name: string,
+    gender: string,
+    email: string,
+    company_assigned: string,
+    manager_id:string,
+    password: string,
+}
+
 export const SideMenu = [
     {
         name: 'Dashboard',
