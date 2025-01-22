@@ -58,12 +58,9 @@ export default function AddNewAgent(){
                 <input type='email' placeholder="Agent's Email..." name='email' id='email' required/>
             </div>
             <div className="flex flex-col w-1/2 border-2 border-black">
-                <label>Manager&apos;s Name</label>
-                <input type='text' placeholder="Manager's Name..." name='manager' id='manager' required/>
-            </div>
-            <div>
                 <label>Managers</label>
-                <select>
+                <select name="manager" id="manager" required>
+                    <option value={''} >Select Manager</option>
                     {
                         managers.map((manager) =>(
                             <option value={manager.manager_id} key={manager.manager_id}>{manager.name}</option>
