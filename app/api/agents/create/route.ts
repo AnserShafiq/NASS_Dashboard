@@ -21,9 +21,10 @@ export async function POST(request: Request){
     const usernumber = String(parseInt(count.rows[0].count)+1).padStart(6,'0')
     console.log(count.rows[0])
     const agent_id= `NASS_AG_${usernumber}`
+    console.log(formData.getAll('assigned'),typeof(formData.get('assigned')))
     const query= {
-        text: `INSERT INTO AGENTS (AGENT_ID, NAME, GENDER, EMAIL, ASSIGNED_COMPANY, MANAGER_ID,PASSWORD,CREATED_ON) 
-        VALUES ($1,$2,$3,$4,$5,$6,$7,NOW())`,
+        text: `INSERT INTO AGENTS (AGENT_ID, NAME, GENDER, EMAIL, ASSIGNED_COMPANY, MANAGER_ID,PASSWORD,CREATED_ON, COMPANIES) 
+        VALUES ($1,$2,$3,$4,$5,$6,$7,NOW(),$8)`,
         values: [
             agent_id, 
             formData.get('name'), 
@@ -31,7 +32,9 @@ export async function POST(request: Request){
             formData.get('email'), 
             formData.get('assigned'), 
             formData.get('manager'),
-            formData.get('password')]
+            formData.get('password'),
+            `{${formData.getAll('assigned')}}`
+        ]
     }
     await sql.query(query)
 

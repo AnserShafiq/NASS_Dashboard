@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Suspense } from "react";
 import Loading from "@/app/ui/loading";
 import AddNewAgent from "@/app/ui/dashboard/add-agent";
+import AddManager from "@/app/ui/dashboard/add-manager";
 
 export default async function Page() {
   const session = await auth();
@@ -27,6 +28,7 @@ export default async function Page() {
       />
       <Userslist />
       <AddNewAgent />
+      <AddManager User={User?.id}/>
     </main>
     </Suspense>
   );

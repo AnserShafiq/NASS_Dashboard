@@ -17,7 +17,18 @@ export type Agent = {
     manager_id:string,
     password: string,
 }
-
+export type Managers = {
+    manager_id: string,
+    name: string,
+    email:string,
+    password: string,
+    contact_number: string,
+    gender: string,
+    companies: string | Array<string>,
+    agents_assigned: number,
+    created_by: string,
+    created_on:string,
+}
 export const SideMenu = [
     {
         name: 'Dashboard',

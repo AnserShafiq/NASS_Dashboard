@@ -21,3 +21,14 @@ export async function fetchUserById(id:string){
         console.error('User not found')
     }
 }
+
+// export async function fetchManagers() {
+//     try {
+//       const managers = await sql<Managers>`SELECT * FROM manager_users`;
+//       return managers.rows; // Assuming 'sql' already processes the rows
+//     } catch (err) {
+//       console.error('Error fetching managers:', err);
+//       return []; // Return an empty array in case of failure
+//     }
+//   }
+  

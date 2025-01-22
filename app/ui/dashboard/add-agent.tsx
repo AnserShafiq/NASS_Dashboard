@@ -1,8 +1,27 @@
 'use client'
 
-import React from "react"
+import { Managers } from "@/app/lib/definitions";
+// import { fetchManagers } from "@/app/lib/fetchings";
+import React, { useEffect, useState } from "react"
 
 export default function AddNewAgent(){
+
+    const [managers, setManagers] = useState<Managers[]>([]);
+    useEffect(() => {
+        const getManagers = async () => {
+          try {
+            const response = await fetch('/api/managers/create',{method: 'GET'}); // Call server-side function
+            const data = await response.json()
+            setManagers(data)
+            console.log(data)
+          } catch (error) {
+            console.error('Error fetching managers:', error);
+          }
+        };
+    
+        getManagers();
+      }, []);
+      console.log('=> ',managers)
 
     const handleSubmission = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -42,21 +61,41 @@ export default function AddNewAgent(){
                 <label>Manager&apos;s Name</label>
                 <input type='text' placeholder="Manager's Name..." name='manager' id='manager' required/>
             </div>
+            <div>
+                <label>Managers</label>
+                <select>
+                    {
+                        managers.map((manager) =>(
+                            <option value={manager.manager_id} key={manager.manager_id}>{manager.name}</option>
+                        ) )
+                    }
+                </select>
+            </div>
             <div className="flex flex-col w-1/2 border-2 border-black">
                 <label>Profile Password</label>
                 <input type='text' placeholder="Password..." name='password' id='password' required/>
             </div>
             <div className="flex flex-col w-1/2 border-2 border-black">
-                <label>Company Alloted</label>
-                <select name='assigned' id="assigned" required>
-                    <option value={''} >Select Option</option>
-                    <option value={'One'}>One</option>
-                    <option value={'Two'}>Two</option>
-                    <option value={'Three'}>Three</option>
-                    <option value={'Four'}>Four</option>
-                    <option value={'Five'}>Five</option>
-                </select>
+            <label>Company Allotted</label>
+            <div id="assigned-checkboxes">
+                <label>
+                    <input type="checkbox" name="assigned" value="One" /> One
+                </label>
+                <label>
+                    <input type="checkbox" name="assigned" value="Two" /> Two
+                </label>
+                <label>
+                    <input type="checkbox" name="assigned" value="Three" /> Three
+                </label>
+                <label>
+                    <input type="checkbox" name="assigned" value="Four" /> Four
+                </label>
+                <label>
+                    <input type="checkbox" name="assigned" value="Five" /> Five
+                </label>
             </div>
+            </div>
+
             <button type="submit">Submit</button>
         </form>
     )
