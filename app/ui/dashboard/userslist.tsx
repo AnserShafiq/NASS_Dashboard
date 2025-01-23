@@ -1,5 +1,5 @@
 
-import { fetchUsers } from "@/app/lib/fetchings"
+import { fetchAgents } from "@/app/lib/fetchings"
 import Link from "next/link"
 import React from "react"
 import DeleteBtn from "./delete-user-btn"
@@ -8,7 +8,7 @@ import DeleteBtn from "./delete-user-btn"
 
 export default async function Agentslist(){
 
-    const Agents = await fetchUsers('agents')
+    const Agents = await fetchAgents()
 
     return(
         <div className="w-[1000px] p-4 border-2 border-yellow-500">
@@ -32,21 +32,21 @@ export default async function Agentslist(){
                 </thead>
                 <tbody className="w-full">
                     {
-                    Agents.map((user) => (
-                        <tr className="w-full" key={user.agent_id}>
+                    Agents.map((agent) => (
+                        <tr className="w-full" key={agent.agent_id}>
                             <td className="border-2 align-top border-black text-start w-[25%] max-w-[25%] text-wrap">
-                                {user.name}
+                                {agent.name}
                             </td>
                             <td className="border-2 align-top border-black text-start w-[25%] max-w-[25%] text-wrap">
-                                {user.agent_id}
+                                {agent.agent_id}
                             </td>
                             <td className="border-2 align-top border-black text-start w-[25%] max-w-[25%] text-wrap">
-                                {user.email}
+                                {agent.email}
                             </td>
 
                             <td className="border-2 align-top border-black text-start w-[25%] max-w-[25%] text-wrap">
-                                <EditUser id={user.agent_id}>Edit</EditUser>
-                                <DeleteBtn id={user.agent_id}>Delete It</DeleteBtn>
+                                <EditUser id={agent.agent_id}>Edit</EditUser>
+                                <DeleteBtn id={agent.agent_id}>Delete It</DeleteBtn>
                             </td>
                         </tr>
                     ))

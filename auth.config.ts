@@ -19,7 +19,7 @@ export const authConfig: NextAuthConfig = {
         session.user = {
           ...session.user,
           name: token.name || '', // Add name to session.user
-          email: token.email || '', // Ensure email is included
+          email: token.email || '',
           id: token.sub || '', // Add user ID if required
         };
       }
