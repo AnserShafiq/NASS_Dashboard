@@ -1,11 +1,18 @@
 import { sql } from "@vercel/postgres";
-import { User } from "./definitions";
+import { Agent, Managers, User } from "./definitions";
 
 
-export async function fetchUsers (){
+export async function fetchUsers (type:string){
+    console.log(type)
     try{
-        const users = await sql<User>`SELECT * FROM user_profiles`;
-        return users.rows;
+        if(type ==='agents'){
+            const agents = await sql<Agent>`SELECT * FROM AGENTS`;
+            return agents.rows;
+        }else {
+            const managers = await sql<Managers>`SELECT * FROM MANAGER_USERS`;
+            return managers.rows;
+        }
+
     }catch(error){
         console.error('Unable to read users from DB', error)
         throw new Error('Failed to fetch')

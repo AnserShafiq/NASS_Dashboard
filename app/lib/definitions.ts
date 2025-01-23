@@ -1,10 +1,10 @@
 // In this file we are dealing the varaiable's structures
 
 export type User = {
-    profilePic: File,
-    id:string,
+    user_id:string,
     user_name: string,
     user_email:string,
+    user_type:string,
     password:string,
 };
 
@@ -29,7 +29,23 @@ export type Managers = {
     created_by: string,
     created_on:string,
 }
-export const SideMenu = [
+export const AgentMenu = [
+    {
+        name: 'Dashboard',
+        link: '/dashboard'
+    },{
+        name: 'Your Companies',
+        link: '/dashboard',
+    },{
+        name: 'Your Work',
+        link:'/dashboard',
+    },{
+        name: 'Add New Data',
+        link: '/dashboard/newdata',
+    },
+
+]
+export const ManagerMenu = [
     {
         name: 'Dashboard',
         link: '/dashboard'

@@ -13,7 +13,6 @@ export default function AddNewAgent(){
             const response = await fetch('/api/managers/create',{method: 'GET'}); // Call server-side function
             const data = await response.json()
             setManagers(data)
-            console.log(data)
           } catch (error) {
             console.error('Error fetching managers:', error);
           }
@@ -21,7 +20,9 @@ export default function AddNewAgent(){
     
         getManagers();
       }, []);
-      console.log('=> ',managers)
+    // if(managers){
+    //     console.log('=> ',managers)
+    // }
 
     const handleSubmission = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()

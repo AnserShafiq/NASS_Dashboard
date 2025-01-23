@@ -23,16 +23,28 @@ export const authConfig: NextAuthConfig = {
           id: token.sub || '', // Add user ID if required
         };
       }
+      // console.log('Session BE => ', session.user)
       return session;
     },
     /**
      * Adds user details to the JWT when logging in.
      */
     jwt: async ({ token, user}) => {
+      // console.log('User name =>',user.name)
+      
       if (user) {
-        token.name = user?.user_name;
-        token.email = user?.user_email;
-        token.sub = user.id;
+        token.name = user?.name;
+        token.email = user?.email;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        token.type = (user as any)?.user_type;
+        if(token.type === 'manager'){
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          token.sub = (user as any)?.manager_id;
+        }else{
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          token.sub = (user as any)?.agent_id;
+        }
+        
       }
       // console.log('Toker from BE=> ', token)
       return token;

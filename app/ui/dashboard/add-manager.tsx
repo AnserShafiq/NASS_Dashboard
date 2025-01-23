@@ -87,7 +87,7 @@ export default function AddManager ({User}:{User:string}){
             </div>
             <div className="flex flex-col w-1/2 border-2 border-black">
                 <label>No. Of Agents Assigned</label>
-                <input type='number' placeholder="Agents assigned..." name='agents_assigned' id='agents_assigned' required/>
+                <input type='number' placeholder="Agents assigned..." name='agents_assigned' id='agents_assigned' min={0} required/>
             </div>
             <button type="submit">Submit it</button>
         </form>

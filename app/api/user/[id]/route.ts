@@ -5,7 +5,7 @@ export async function DELETE (request: Request, {params} : {params: {id: string}
     try{
         const {id} = await params
         const query = {
-            text: 'DELETE FROM user_profiles WHERE id = $1',
+            text: 'DELETE FROM AGENTS WHERE agent_id = $1',
             values: [id]
         }
         await sql.query(query)

@@ -48,6 +48,6 @@ export async function POST(request:Request){
 
 export async function GET() {
     const managers_count = await sql`SELECT * FROM MANAGER_USERS`
-    console.log('==>', managers_count.rows)
+    // console.log('==>', managers_count.rows)
     return NextResponse.json(managers_count.rows)
 }

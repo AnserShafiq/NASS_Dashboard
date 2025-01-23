@@ -4,6 +4,7 @@ import Button from "../button";
 export default function Left(){
     return(
         <div className="flex flex-col justify-center items-start pl-36 pr-20 w-full h-full">
+            
             <Image src={'/na-icon.png'} width={150} height={150} alt="North American Staffing Services"/>
             <h2 className="font-bold tracking-wide leading-none text-3xl uppercase mt-2"><span className="text-red-600">North American</span><br /><span className="text-blue-900">Staffing Services</span></h2>
             {/* eslint-disable */}

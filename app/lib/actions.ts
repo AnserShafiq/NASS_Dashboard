@@ -60,11 +60,20 @@ export async function createUser (formData: FormData):Promise<{success:boolean}>
 
 export async function getUserDetails(id:string | undefined){
     try {
-        const result = await sql`SELECT * FROM USER_PROFILES WHERE id=${id}`
+        // eslint-disable-next-line
+        let result:any;
+        if(id?.includes('NASS_AG_'))
+        {
+            result = await sql`SELECT * FROM AGENTS WHERE agent_id=${id}`
+        }else if(id?.includes('NASS_MN_')){
+            result = await sql`SELECT * FROM MANAGER_USERS WHERE manager_id=${id}`
+        }
         const user = result.rows[0]
-        const base64 = Buffer.from(user.profile_pic).toString('base64');
-        user.profile_pic = `data:image/png;base64,${base64}`
+        console.log('User from action => ', result.rows[0])
         return user
+        // const base64 = Buffer.from(user.profile_pic).toString('base64');
+        // user.profile_pic = `data:image/png;base64,${base64}`
+        
     }catch{
         console.error('Unable to get user.')
         return null

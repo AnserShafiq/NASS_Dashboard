@@ -1,13 +1,22 @@
 
 import React, { Suspense } from "react";
 import Sidebar from "../ui/sidebar";
+import { auth } from "@/auth";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default async function Layout({ children }: { children: React.ReactNode }) {
+  let usertype: string = '';
+  const session = await auth();
+  if(session?.user?.id?.includes('NASS_AG_')){
+    usertype = 'agent'
+  }else if (session?.user?.id?.includes('NASS_MN_')){
+    usertype = 'manager'
+  }
+
   return (
     <Suspense>
     <div className="h-screen min-w-screen relative flex flex-row">
       <div className="w-1/6 bg-gray-500 flex flex-col items-start justify-center ">
-        <Sidebar />
+        <Sidebar type={usertype}/>
       </div>
       <div className="relative w-5/6 h-full border-2 border-black bg-gray-50 text-black flex items-start justify-center overflow-y-auto top-0">
       <h3 className="absolute right-2 top-3">User Profile</h3>
