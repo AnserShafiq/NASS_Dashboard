@@ -8,6 +8,7 @@
   --sidebar: rgb(30, 41, 130);
   --sidebar-2: linear-gradient(-45deg ,#131a5d 0%, #080c38 20%, #04082c 50%, #090e3f 80%, #131a5d 100%);
   --button-bg-red: #ebdadafd;
+  --box-shadow-one: rgba(29, 29, 29, 0.162);
 }
 
 @media (prefers-color-scheme: dark) {

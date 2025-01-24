@@ -61,12 +61,45 @@ async function createNewUsersTable(){
     `;
 }
 
+async function createDailyDialsTable(){
+    await client.sql`
+    CREATE TABLE IF NOT EXISTS DAILY_DIALS(
+    dial_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    total_calls INT NOT NULL,
+    calls_connected INT NOT NULL,
+    calls_rejected INT NOT NULL,
+    positive_calls INT NOT NULL,
+    negative_calls INT NOT NULL,
+    date TIMESTAMP NOT NULL,
+    agent_id TEXT NOT NULL
+    )
+    `
+}
+
+async function createDailyEmailsTable(){
+    await client.sql`
+        CREATE TABLE IF NOT EXISTS DAILY_EMAILS(
+            MAIL_ID UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+            SENT INT NOT NULL ,
+            OPENED INT NOT NULL,
+            BOUNCED INT NOT NULL,
+            DIRECT_RESPONSE INT NOT NULL,
+            POSITIVE_RESPONSE INT NOT NULL,
+            NEGATIVE_RESPONSE INT NOT NULL,
+            DATE TIMESTAMP NOT NULL,
+            AGENT_ID TEXT NOT NULL
+        )
+    `
+}
+
 export async function GET() {
     try {
         await client.sql`BEGIN`;
         await seedUsers();
-        await seedUserImages();
+        // await seedUserImages();
         await createNewUsersTable();
+        await createDailyDialsTable();
+        await createDailyEmailsTable();
         await client.sql`COMMIT`;
         return new Response(JSON.stringify({ message: "Database got updated" }), { status: 200 });
     } catch (err) {

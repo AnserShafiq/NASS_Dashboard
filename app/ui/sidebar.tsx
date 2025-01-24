@@ -9,10 +9,10 @@ export default function Sidebar({type}:{type:string}) {
 
     return (
         <div className="relative flex flex-col justify-top bg-sidebar2 items-start w-full h-full p-4">
-            <div className="w-full max-h-[25%] h-[25%] border-2 ">
+            <div className="w-full max-h-[25%] h-[25%] ">
                 <Image className="mx-auto" src={Logo} alt="North American Staffing Services" width={120} height={120} priority={true} />
             </div>
-            <div className="w-full max-h-[65%] h-[65%] border-2 pt-3 px-4">
+            <div className="w-full max-h-[65%] h-[65%] pt-3 px-4">
                 {
                     type === 'agent' && AgentMenu.map((item) =>(
                         <div key={item.name} className="my-3">

@@ -12,7 +12,9 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
         sidebar: 'var(--sidebar)',
-
+        shadow:{
+          '1':'var(--box-shadow-one)',
+        },
         red:{
           '200':'var(--button-bg-red)'
         }
@@ -20,6 +22,10 @@ export default {
       backgroundImage:{
         'home':"url('/images/home.jpg')",
         sidebar2: 'var(--sidebar-2)',
+      },
+      width:{
+        sidebar: '16.5vw',
+        dashboard: '83.5vw',
       }
     },
   },

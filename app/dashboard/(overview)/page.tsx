@@ -16,15 +16,15 @@ export default async function Page() {
   }else if(session?.user?.id?.includes('NASS_MN_')){
     display= 'Manager';
   }
-  console.log('Frontend ==> ', display)
+  // console.log('Frontend ==> ', display)
 
 
   return (
     <Suspense fallback={<Loading />}>
-    <main>
+    <main className=" w-dashboard min-h-screen">
     {
       display === 'Agent' ? (
-        <AgentsDashboard User={User}/>
+        <AgentsDashboard User={User} Id={session?.user?.id}/>
       ):(
         <ManagersDasboard User={User}/>
       )
