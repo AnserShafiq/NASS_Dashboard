@@ -4,6 +4,7 @@ export const authConfig: NextAuthConfig = {
   pages: {
     signIn: '/login',
     signOut: '/',
+    error: '/login'
   },
   session:{
     strategy: 'jwt',

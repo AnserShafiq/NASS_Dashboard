@@ -10,6 +10,7 @@ import { useActionState } from 'react';
 
 export default function Form(){
   const {data:session} = useSession()
+  
   console.log(session)
     const [errorMessage, formAction, isPending] = useActionState(
         authenticate,

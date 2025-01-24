@@ -60,8 +60,9 @@ export const {handlers, auth, signIn, signOut} = NextAuth({
                         user_type: type,
                     }
                     return toSend
+                }else{
+                    return new Error('Password not matched.')
                 }
-
             }
             console.log('Invalid Credentials')
             return null
