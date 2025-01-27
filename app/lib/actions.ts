@@ -69,11 +69,7 @@ export async function getUserDetails(id:string | undefined){
             result = await sql`SELECT * FROM MANAGER_USERS WHERE manager_id=${id}`
         }
         const user = result.rows[0]
-        // console.log('User from action => ', result.rows[0])
         return user
-        // const base64 = Buffer.from(user.profile_pic).toString('base64');
-        // user.profile_pic = `data:image/png;base64,${base64}`
-        
     }catch{
         console.error('Unable to get user.')
         return null
@@ -104,9 +100,10 @@ export async function authenticate(
     formData: FormData,
     ){
     try{
-        const user = await signIn('credentials', formData)
+        const user = await signIn('credentials', formData);
         console.log('Action==> ',user)
     }catch(error){
+        console.error('Error from Authenticate Action => ', error)
         if (error instanceof AuthError) {
             switch (error.message) {
               case 'CredentialsSignin':

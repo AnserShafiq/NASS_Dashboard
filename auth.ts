@@ -12,8 +12,10 @@ async function getUser(email:string, type: string) {
         // eslint-disable-next-line
         let user:any;
         if(type === 'agent'){
+            console.log('Checking in agents table')
             user = await sql<Agent>`SELECT * FROM AGENTS WHERE agent_id=${email}`
         }else if(type === 'manager'){
+            console.log('Checking in managers table')
             user = await sql<Managers>`SELECT * FROM MANAGER_USERS WHERE manager_id=${email}`
         }
         return user.rows[0]
@@ -34,7 +36,7 @@ export const {handlers, auth, signIn, signOut} = NextAuth({
         async authorize(credentials){
             const parsedCredentials = z.object({
                 employee_code:z.string(),
-                password:z.string().min(6)
+                password:z.string(),
             }).safeParse(credentials);
 
             if (parsedCredentials.success){
@@ -44,24 +46,31 @@ export const {handlers, auth, signIn, signOut} = NextAuth({
                     // console.log('Agent Getting Logged In')
                     type ='agent'
                     user = await getUser(employee_code,type)
+                    console.log(user)
                 }else if(employee_code.includes('NASS_MN_')){
-                    // console.log('Agent Getting Logged In')
+                    console.log('Agent Getting Logged In')
                     type='manager'
                     user = await getUser(employee_code,type)
-
                 }
 
-                if(!user) return null
-                if (password === user.password) 
+                if(!user) 
                 {
-                    // console.log('password matched',user)
-                    const toSend = {
-                        ...user,
-                        user_type: type,
+                    return null
+                }
+                else
+                {
+                    if (password === user.password) 
+                    {
+                        // console.log('password matched',user)
+                        const toSend = {
+                            ...user,
+                            user_type: type,
+                        }
+                        return toSend
+                    }else{
+                        console.log('Incorrect password')
+                        throw new Error('Password not matched.')
                     }
-                    return toSend
-                }else{
-                    return new Error('Password not matched.')
                 }
             }
             console.log('Invalid Credentials')
