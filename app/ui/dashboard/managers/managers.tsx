@@ -17,7 +17,7 @@ export default async function ManagersDasboard({User}:{User:any}){
             /> */}
             <Userslist />
             <AddNewAgent />
-            <AddManager User={User?.id}/>
+            <AddManager User={User?.manager_id}/>
         </div>
     )
 }

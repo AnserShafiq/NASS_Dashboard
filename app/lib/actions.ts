@@ -2,7 +2,7 @@
 
 import { signIn } from "@/auth";
 import { sql } from "@vercel/postgres";
-import { AuthError } from "next-auth";
+// import { AuthError } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation"
 import { z } from "zod";
@@ -94,24 +94,35 @@ export async function editUser (id:string, formData: FormData){
     redirect('/dashboard')
 }
 
-
 export async function authenticate(
     prevState: string | undefined,
-    formData: FormData,
-    ){
-    try{
-        const user = await signIn('credentials', formData);
-        console.log('Action==> ',user)
-    }catch(error){
-        console.error('Error from Authenticate Action => ', error)
-        if (error instanceof AuthError) {
-            switch (error.message) {
-              case 'CredentialsSignin':
-                return 'Invalid credentials.';
-              default:
-                return 'Something went wrong.';
-            }
+    formData: FormData
+) {
+    try {
+        // eslint-disable-next-line
+        const data: Record<string, any> = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+
+        const user = await signIn('credentials', {
+            redirect: false,
+            ...data,
+        });
+
+        if (user?.error) {
+            console.error('Authentication error:', user.error);
+            return { error: user.error };
         }
-          throw error;
+
+        console.log('Action==>', user);
+        return { success: true, user }; 
+    } 
+    // eslint-disable-next-line
+    catch (error: any) {
+        console.error('Error from Authenticate Action => ', error);
+        const errorMessage = error.message || "An unknown error occurred - Please contact the administrator";
+        return { error: errorMessage };
     }
 }

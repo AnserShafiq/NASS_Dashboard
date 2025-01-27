@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { CredentialsSignin } from "next-auth";
 import { authConfig } from "./auth.config";
 import Credentials from 'next-auth/providers/credentials'
 import { z } from "zod";
@@ -25,6 +25,17 @@ async function getUser(email:string, type: string) {
     }
 }
 
+export class UserDoesNotExistError extends CredentialsSignin {
+    code = "AuthError"
+    message = "User does not exist - Please check credentials"
+}
+
+export class PasswordInccorectError extends CredentialsSignin {
+    code = "AuthError"
+    message = "Password is incorrect - Please check credentials"
+}
+
+
 export const {handlers, auth, signIn, signOut} = NextAuth({
     ...authConfig,
     providers: [
@@ -43,33 +54,31 @@ export const {handlers, auth, signIn, signOut} = NextAuth({
                 const {employee_code,password} = parsedCredentials.data
                 let user,type;
                 if(employee_code.includes('NASS_AG_')){
-                    // console.log('Agent Getting Logged In')
                     type ='agent'
                     user = await getUser(employee_code,type)
-                    console.log(user)
                 }else if(employee_code.includes('NASS_MN_')){
-                    console.log('Agent Getting Logged In')
                     type='manager'
                     user = await getUser(employee_code,type)
                 }
-
+                console.log('User ==> ', user)
                 if(!user) 
                 {
-                    return null
+                    return new UserDoesNotExistError()
                 }
                 else
                 {
                     if (password === user.password) 
                     {
-                        // console.log('password matched',user)
                         const toSend = {
                             ...user,
                             user_type: type,
                         }
+                        console.log(toSend)
                         return toSend
                     }else{
                         console.log('Incorrect password')
-                        throw new Error('Password not matched.')
+                        return new PasswordInccorectError()
+                    
                     }
                 }
             }

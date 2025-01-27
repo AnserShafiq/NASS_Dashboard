@@ -16,7 +16,7 @@ export default async function Page() {
   }else if(session?.user?.id?.includes('NASS_MN_')){
     display= 'Manager';
   }
-  // console.log('Frontend ==> ', display)
+  console.log('Active User ==> ', User)
 
 
   return (

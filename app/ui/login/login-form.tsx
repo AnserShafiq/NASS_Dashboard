@@ -1,21 +1,33 @@
 "use client"
 import { authenticate } from '@/app/lib/actions';
+import { useState } from 'react';
 import {
     AtSymbolIcon,
     KeyIcon,
     ArrowRightIcon,ExclamationCircleIcon
   } from '@heroicons/react/24/outline';
 import { useSession } from 'next-auth/react';
-import { useActionState } from 'react';
+import { redirect } from 'next/navigation';
+// import { useActionState } from 'react';
 
 export default function Form(){
   const {data:session} = useSession()
-  
   console.log(session)
-    const [errorMessage, formAction, isPending] = useActionState(
-        authenticate,
-        undefined
-      )
+    const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+    const [isPending, setIsPending] = useState(false);
+
+    const formAction = async (formData: FormData) => {
+        setIsPending(true);
+        const result = await authenticate(undefined, formData);
+        console.log('From frontend' , result)
+        if (result?.error) {
+            setErrorMessage(result.error);
+        }else if(result?.success){
+          redirect('/dashboard')
+        }
+        
+    }
+    
     return(
     <form action={formAction} className="space-y-3 text-black">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
@@ -57,7 +69,6 @@ export default function Form(){
                 name="password"
                 placeholder="Enter password"
                 required
-                minLength={6}
               />
               <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
