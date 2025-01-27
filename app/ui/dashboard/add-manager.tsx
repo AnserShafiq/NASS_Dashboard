@@ -1,4 +1,6 @@
 'use client'
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { useState } from "react"
 
 export default function AddManager ({User}:{User:string}){
@@ -33,10 +35,15 @@ export default function AddManager ({User}:{User:string}){
 
         console.log('Final Data = > ', data)
 
-        await fetch('/api/managers/create',{
+        const response = await fetch('/api/managers/create',{
             method: 'POST',
             body: JSON.stringify(data),
         })
+
+        if(response.ok){
+            revalidatePath('/dashboard')
+            redirect('/dashboard')
+        }
     } 
     return(
         <form onSubmit={handleSubmission} className='flex flex-wrap'>
