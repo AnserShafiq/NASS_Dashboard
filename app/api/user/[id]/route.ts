@@ -1,14 +1,12 @@
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 
-export async function DELETE (request: Request, context: {params: {id: string}}){
+export async function DELETE (request: Request, {params}: {params: {id: string}}){
     try{
-        const {id} = context.params;
-        const query = {
-            text: 'DELETE FROM AGENTS WHERE agent_id = $1',
-            values: [id]
-        }
-        await sql.query(query)
+        const {id} = params
+
+        await sql`DELETE FROM AGENTS WHERE agent_id = ${id}`
+
         return NextResponse.json({message:'User got deleted', status: 200});
     }catch{
         console.error('Unable to delete a User.')
