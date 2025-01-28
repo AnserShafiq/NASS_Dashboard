@@ -10,16 +10,16 @@ export default function EditUserForm(
 
     const updateUser = async(formData: FormData)=>{
         console.log(formData)
-        await editUser(target.id, formData)
+        await editUser(target.user_id, formData)
     }
 
     return(
         <form action={updateUser}>
             <div className='flex flex-col'>
                 <label>Username:</label>
-                <input className="text-black" type="text" name="name" id="name" defaultValue={target.name} />
+                <input className="text-black" type="text" name="name" id="name" defaultValue={target.user_name} />
                 <label>Enter email:</label>
-                <input className="text-black" type="email" name="email" id="email" defaultValue={target.email} />
+                <input className="text-black" type="email" name="email" id="email" defaultValue={target.user_email} />
                 <label>Enter password:</label>
                 <input className="text-black" type="text" name="password" id="password" defaultValue={target.password} />
                 <button type="submit">Submit</button>
