@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function DELETE (request: Request, context: {params: {id: string}}){
     try{
-        const {id} = await context.params;
+        const {id} = context.params;
         const query = {
             text: 'DELETE FROM AGENTS WHERE agent_id = $1',
             values: [id]
