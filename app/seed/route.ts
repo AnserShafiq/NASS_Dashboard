@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { db } from "@vercel/postgres";
 import { users, images } from "../lib/sampleDataForDB";
 import bcrypt from "bcrypt";
