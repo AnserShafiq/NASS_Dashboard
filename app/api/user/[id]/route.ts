@@ -3,10 +3,10 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(
   request: Request,
-  context: { params: Record<string, string> }
+  {params}: { params: Record<string, string> }
 ) {
   try {
-    const { id } = await context.params;
+    const { id } = await params;
 
     if (!id) {
       return NextResponse.json({ error: "User ID is required" }, { status: 400 });
