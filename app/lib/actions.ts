@@ -76,6 +76,17 @@ export async function getUserDetails(id:string | undefined){
     }
 }
 
+export async function deleteUser(id:string){
+    try{
+        await sql`DELETE FROM AGENTS WHERE agent_id=${id}` 
+        return {message: 'User deleted successfully'}
+    }catch{
+        return{
+            message: 'User not available',
+        }
+    }
+}
+
 export async function editUser (id:string, formData: FormData){
     const {name, email, password}=EditUser.parse({
         name: formData.get('name'),
